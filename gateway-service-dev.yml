@@ -1,0 +1,26 @@
+server:
+  port: 8080
+  
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: movieRoute 
+          uri: lb://MOVIE-SERVICE 
+          predicates: 
+            - Path=/movies/**
+        - id: catalogRoute 
+          uri: lb://CATALOG-SERVICE 
+          predicates: 
+            - Path=/catalogs/**
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
